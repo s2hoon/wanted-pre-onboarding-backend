@@ -2,10 +2,14 @@ package preonboard.preonboard.service;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import preonboard.preonboard.config.JwtTokenUtil;
 import preonboard.preonboard.domain.Member;
+import preonboard.preonboard.dto.base.BaseException;
+import preonboard.preonboard.dto.base.BaseResponseStatus;
 import preonboard.preonboard.repository.MemberRepository;
 
 @Service
@@ -15,6 +19,10 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    @Value("${jwt.token.secret}")
+    private String key;
+    private Long expireTimeMs = 1000 * 60 * 60L; //1시간
 
 
     public void join(String email, String password) {
@@ -30,29 +38,41 @@ public class MemberService {
 
     }
 
+    public String login(String email, String password){
+
+        //유효성 검사
+        validateEmail(email);
+        validatePassword(password);
+
+        //email 중복확인
+        Member selectedUser = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new BaseException(BaseResponseStatus.WRONG_EMAIL));
+
+        //비밀번호 틀림
+        if (!bCryptPasswordEncoder.matches(password, selectedUser.getPassword())) {
+            throw new BaseException(BaseResponseStatus.WRONG_PASSWORD);
+        }
+
+        //토큰 생성
+        String token = JwtTokenUtil.createToken(selectedUser.getEmail(), key, expireTimeMs);
+
+        return token;
+    }
     private void validateEmail(String email) {
         if (!email.contains("@")) {
-            throw new InvalidEmailFormatException("이메일 형식이 올바르지 않습니다.");
+            throw new BaseException(BaseResponseStatus.INVALID_EMAIL_FORMAT);
         }
     }
 
     private void validatePassword(String password) {
         if (password.length() < 8) {
-            throw new InvalidPasswordException("비밀번호는 최소 8자 이상이어야 합니다.");
+            throw new BaseException(BaseResponseStatus.INVALID_PASSWORD_FORMAT);
         }
     }
 
-    public class InvalidEmailFormatException extends RuntimeException {
-        public InvalidEmailFormatException(String message) {
-            super(message);
-        }
-    }
 
-    public class InvalidPasswordException extends RuntimeException {
-        public InvalidPasswordException(String message) {
-            super(message);
-        }
-    }
+
+
 
 
 }

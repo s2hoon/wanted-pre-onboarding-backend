@@ -13,7 +13,11 @@ public enum BaseResponseStatus {
      */
     INVALID_EMAIL_FORMAT(false, 2000, "이메일 형식이 올바르지 않습니다."),
 
-    INVALID_PASSWORD_FORMAT(false, 2001, "비밀번호는 8자 이상이어야 합니다.")
+    INVALID_PASSWORD_FORMAT(false, 2001, "비밀번호는 8자 이상이어야 합니다."),
+
+    WRONG_EMAIL(false,2002,"이메일이 올바르지 않습니다.") ,
+    WRONG_PASSWORD(false, 2003, "비밀번호가 올바르지 않습니다."),
+
 
     ;
 

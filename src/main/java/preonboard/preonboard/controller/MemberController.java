@@ -3,8 +3,10 @@ package preonboard.preonboard.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import preonboard.preonboard.dto.base.BaseResponse;
 import preonboard.preonboard.dto.MemberJoinRequest;
+import preonboard.preonboard.dto.MemberLoginRequest;
+import preonboard.preonboard.dto.base.BaseException;
+import preonboard.preonboard.dto.base.BaseResponse;
 import preonboard.preonboard.dto.base.BaseResponseStatus;
 import preonboard.preonboard.service.MemberService;
 
@@ -24,18 +26,25 @@ public class MemberController {
             String result = "회원 가입 완료";
             return new BaseResponse<String>(BaseResponseStatus.SUCCESS, result);
         }
-        // 이메일 형식 검증 
-        catch(MemberService.InvalidEmailFormatException e){
-            return new BaseResponse<>(BaseResponseStatus.INVALID_EMAIL_FORMAT);
+        // 이메일 형식 에러 & 비밀번호 형식 에러
+        catch(BaseException e){
+            return new BaseResponse<>(e.getStatus());
         }
-        // 비밀번호 형식 검증
-        catch(MemberService.InvalidPasswordException e){
-            return new BaseResponse<>(BaseResponseStatus.INVALID_PASSWORD_FORMAT);
-        }
+
     }
 
 
+    @GetMapping("/sign-in")
+    public BaseResponse<String> login(@RequestBody MemberLoginRequest dto) {
 
+        try {
+            String token = memberService.login(dto.getEmail(), dto.getPassword());
+            return new BaseResponse<String>(BaseResponseStatus.SUCCESS,"Bearer " + token);
+        } catch (BaseException e) {
+            return new BaseResponse<>(e.getStatus());
+        }
+
+    }
 
 
 
