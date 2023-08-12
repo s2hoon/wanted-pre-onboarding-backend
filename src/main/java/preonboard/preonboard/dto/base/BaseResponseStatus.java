@@ -18,6 +18,9 @@ public enum BaseResponseStatus {
     WRONG_EMAIL(false,2002,"이메일이 올바르지 않습니다.") ,
     WRONG_PASSWORD(false, 2003, "비밀번호가 올바르지 않습니다."),
 
+    WRITE_POST_FAILED(false, 3000, "게시글 작성에 실패하였습니다."),
+
+
 
     ;
 

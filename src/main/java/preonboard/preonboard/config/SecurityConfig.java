@@ -23,7 +23,7 @@ public class SecurityConfig {
         return http
                 .csrf((csrf) -> csrf.disable())
                 .authorizeRequests()
-                .requestMatchers("/app/member/**").permitAll()
+//                .requestMatchers("/app/member/**").permitAll()
                 .anyRequest().permitAll()
                 .and()
                 .addFilterBefore(new JwtTokenFilter(memberService, secretKey), UsernamePasswordAuthenticationFilter.class)
