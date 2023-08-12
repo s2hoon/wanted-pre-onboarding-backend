@@ -20,6 +20,8 @@ public enum BaseResponseStatus {
 
     WRITE_POST_FAILED(false, 3000, "게시글 작성에 실패하였습니다."),
 
+    NO_THAT_ID_POST(false, 3001, "id에 해당하는 게시글이 없습니다."),
+
 
 
     ;
