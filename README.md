@@ -5,14 +5,23 @@
 
 ## 애플리케이션 실행 방법
 1. 로컬에서 프로젝트를 빌드
-./gradlew build
+
+  ```./gradlew build```
+
 2. 도커 이미지 빌드 및 푸시하기
-docker build -t chosuhoon/preonboard .
-docker login
-docker push chosuhoon/preonboard
+
+```docker build -t chosuhoon/preonboard .```
+
+```docker login```
+
+```docker push chosuhoon/preonboard```
+
+
 3. EC2 환경에서 도커 이미지 실행
-docker pull chosuhoon/preonboard
-docker-compose up
+
+```docker pull chosuhoon/preonboard```
+
+```docker-compose up```
 
 
 클라우드 환경(AWS, GCP)에 배포 환경을 설계하고 애플리케이션을 배포한 경우 (README.md 파일에 배포된 API 주소와 설계한 AWS 환경 그림으로 첨부
