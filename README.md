@@ -6,7 +6,11 @@ docker compose를 이용하여 애플리케이션 환경을 구성한 경우 (RE
 클라우드 환경(AWS, GCP)에 배포 환경을 설계하고 애플리케이션을 배포한 경우 (README.md 파일에 배포된 API 주소와 설계한 AWS 환경 그림으로 첨부
 
 데이터베이스 테이블 구조
+
+
 ![preonboarding erd](https://github.com/s2hoon/wanted-pre-onboarding-backend/assets/82464990/1c1062f7-b510-438d-bddd-e73c6bc0a2f3)
+
+
 게시글을 수정하거나 삭제할때 게시글의 작성자만 가능해야함으로 table에 Author를 추가할수 있지만 , table 을 간소화하기 위하여 다른방법을 사용하였습니다.
 
 
