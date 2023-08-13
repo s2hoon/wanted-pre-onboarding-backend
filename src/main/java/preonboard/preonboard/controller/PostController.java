@@ -10,6 +10,7 @@ import preonboard.preonboard.domain.Post;
 import preonboard.preonboard.dto.EditPostRequest;
 import preonboard.preonboard.dto.PostResponse;
 import preonboard.preonboard.dto.WritePostRequest;
+import preonboard.preonboard.dto.base.BaseException;
 import preonboard.preonboard.dto.base.BaseResponse;
 import preonboard.preonboard.dto.base.BaseResponseStatus;
 import preonboard.preonboard.service.PostService;
@@ -22,8 +23,6 @@ public class PostController {
 
     private final PostService postService;
 
-
-
     @PostMapping("/write-post")
     public BaseResponse<String> writePost(@RequestBody WritePostRequest writePostRequest) {
         try {
@@ -31,16 +30,21 @@ public class PostController {
             String content = writePostRequest.getContent();
             postService.writePost(title, content);
             return new BaseResponse<String>(BaseResponseStatus.SUCCESS, "글 작성 성공");
-        } catch (Exception e) {
-            return new BaseResponse<>(BaseResponseStatus.WRITE_POST_FAILED);
+        } catch (BaseException e) {
+            return new BaseResponse<>(e.getStatus());
         }
+
     }
 
     @GetMapping("/getAll")
     public BaseResponse<Page<PostResponse>> getAllPost(@PageableDefault(size = 10) Pageable pageable) {
-        Page<Post> page = postService.getAllPost(pageable);
-        Page<PostResponse> pageDto = page.map(PostResponse::new);
-        return new BaseResponse<Page<PostResponse>>(BaseResponseStatus.SUCCESS, pageDto);
+        try {
+            Page<Post> page = postService.getAllPost(pageable);
+            Page<PostResponse> pageDto = page.map(PostResponse::new);
+            return new BaseResponse<Page<PostResponse>>(BaseResponseStatus.SUCCESS, pageDto);
+        }catch (BaseException e) {
+            return new BaseResponse<>(e.getStatus());
+        }
     }
 
     @GetMapping("/getOne")
@@ -59,9 +63,17 @@ public class PostController {
 
     }
 
-//    @DeleteMapping("/deletePost")
-//    public BaseResponse<String> deletePost(@RequestParam Long id) {
-//        return
-//
-//    }
+    @DeleteMapping("/deletePost")
+    public BaseResponse<String> deletePost(@RequestParam Long id) {
+
+        try {
+            postService.deletePost(id);
+            String result = "게시글 삭제 완료.";
+            return new BaseResponse<String>(BaseResponseStatus.SUCCESS, result);
+        } catch (BaseException e) {
+            return new BaseResponse<>(e.getStatus());
+        }
+
+
+    }
 }

@@ -24,7 +24,7 @@ public enum BaseResponseStatus {
 
 
     NO_THAT_MEMBER(false, 3002, "id에 해당하는 Member가 없습니다"),
-    ;
+    FORBIDDEN(false, 3003, "삭제 권한이 없습니다."),;
 
 
 
