@@ -40,14 +40,7 @@ public class PostService {
 
     }
 
-    private Member getMember() {
-        // 인증 및 멤버 가져오기
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        authenticated(authentication);
-        String email = authentication.getName();
-        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new BaseException(BaseResponseStatus.NO_THAT_MEMBER));
-        return member;
-    }
+
 
     public Page<Post> getAllPost(Pageable pageable) {
         Page<Post> all = postRepository.findAll(pageable);
@@ -84,6 +77,8 @@ public class PostService {
         //삭제
         postRepository.delete(post);
     }
+
+
     private Post getPost(Long id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new BaseException(BaseResponseStatus.NO_THAT_ID_POST));
@@ -95,6 +90,13 @@ public class PostService {
             throw new BaseException(BaseResponseStatus.AUTHENTICATE_FAILED);
         }
     }
-
+    private Member getMember() {
+        // 인증 및 멤버 가져오기
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        authenticated(authentication);
+        String email = authentication.getName();
+        Member member = memberRepository.findByEmail(email).orElseThrow(() -> new BaseException(BaseResponseStatus.NO_THAT_MEMBER));
+        return member;
+    }
 
 }
