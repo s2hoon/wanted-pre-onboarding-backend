@@ -55,7 +55,7 @@ public class PostService {
     }
 
     public PostResponse getOnePost(Long id) {
-        // post 가져옴, 없으면 예외처리
+        // post 가져옴,없으면 예외처리
         Post post = getPost(id);
         return new PostResponse(post);
     }

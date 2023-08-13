@@ -49,17 +49,26 @@ public class PostController {
 
     @GetMapping("/getOne")
     public BaseResponse<PostResponse> getOnePost(@RequestParam Long id) {
-        PostResponse postResponse = postService.getOnePost(id);
-        return new BaseResponse<PostResponse>(BaseResponseStatus.SUCCESS, postResponse);
+        try {
+            PostResponse postResponse = postService.getOnePost(id);
+            return new BaseResponse<PostResponse>(BaseResponseStatus.SUCCESS, postResponse);
+        }catch (BaseException e) {
+            return new BaseResponse<>(e.getStatus());
+        }
+
     }
 
     @PutMapping("/editPost")
     public BaseResponse<PostResponse> editPost(@RequestBody EditPostRequest editPostRequest) {
-        Long id = editPostRequest.getId();
-        String title = editPostRequest.getTitle();
-        String content = editPostRequest.getContent();
-        PostResponse postResponse = postService.editPost(id, title, content);
-        return new BaseResponse<>(BaseResponseStatus.SUCCESS, postResponse);
+        try {
+            Long id = editPostRequest.getId();
+            String title = editPostRequest.getTitle();
+            String content = editPostRequest.getContent();
+            PostResponse postResponse = postService.editPost(id, title, content);
+            return new BaseResponse<>(BaseResponseStatus.SUCCESS, postResponse);
+        }catch (BaseException e) {
+            return new BaseResponse<>(e.getStatus());
+        }
 
     }
 
