@@ -21,7 +21,7 @@
 
 ```docker pull chosuhoon/preonboard```
 
-```docker-compose up```
+```docker-compose up -d```
 
 
 클라우드 환경(AWS, GCP)에 배포 환경을 설계하고 애플리케이션을 배포한 경우 (README.md 파일에 배포된 API 주소와 설계한 AWS 환경 그림으로 첨부
