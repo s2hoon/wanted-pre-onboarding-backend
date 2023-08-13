@@ -22,6 +22,8 @@ public class PostController {
 
     private final PostService postService;
 
+
+
     @PostMapping("/write-post")
     public BaseResponse<String> writePost(@RequestBody WritePostRequest writePostRequest) {
         try {
@@ -48,7 +50,7 @@ public class PostController {
     }
 
     @PutMapping("/editPost")
-    public BaseResponse<PostResponse> editPost(@RequestBody EditPostRequest editPostRequest)  {
+    public BaseResponse<PostResponse> editPost(@RequestBody EditPostRequest editPostRequest) {
         Long id = editPostRequest.getId();
         String title = editPostRequest.getTitle();
         String content = editPostRequest.getContent();
@@ -56,4 +58,10 @@ public class PostController {
         return new BaseResponse<>(BaseResponseStatus.SUCCESS, postResponse);
 
     }
+
+//    @DeleteMapping("/deletePost")
+//    public BaseResponse<String> deletePost(@RequestParam Long id) {
+//        return
+//
+//    }
 }

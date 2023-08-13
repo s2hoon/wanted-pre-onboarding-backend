@@ -30,4 +30,7 @@ public class Post {
     private Member member;
 
 
+
+
+
 }

@@ -53,7 +53,7 @@ public class MemberService {
             throw new BaseException(BaseResponseStatus.WRONG_PASSWORD);
         }
 
-        //토큰 생성
+        //이메일로 토큰 생성
         String token = JwtTokenUtil.createToken(selectedUser.getEmail(), key, expireTimeMs);
 
         return token;
