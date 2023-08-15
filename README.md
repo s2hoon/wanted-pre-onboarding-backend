@@ -1,5 +1,6 @@
 # 지원자 성명: 조수훈 
 
+
 ---
 
 
@@ -24,7 +25,12 @@
 ```docker-compose up -d```
 
 
-클라우드 환경(AWS, GCP)에 배포 환경을 설계하고 애플리케이션을 배포한 경우 (README.md 파일에 배포된 API 주소와 설계한 AWS 환경 그림으로 첨부
+
+배포 링크 : 43.202.50.205:8080
+
+
+![system archi](https://github.com/s2hoon/wanted-pre-onboarding-backend/assets/82464990/ff0673c5-59e3-4fa9-9444-4d56aae2bdae)
+
 
 
 ---
@@ -33,7 +39,6 @@
 
 ![preonboarding erd](https://github.com/s2hoon/wanted-pre-onboarding-backend/assets/82464990/1c1062f7-b510-438d-bddd-e73c6bc0a2f3)
 
-Post에 Author를 추가하여 인증 할수있지만 , table 을 간소화하기 위하여 다른방법을 사용하였습니다.
 
 
 
@@ -46,15 +51,30 @@ Post에 Author를 추가하여 인증 할수있지만 , table 을 간소화하�
 ---
 
 # 구현 방법 및 이유에 대한 간략한 설명
-1대다
-BaseException 에 대한 설명
-Spring Data Jpa
-Jwt 관련?
-DTO
-통합 테스트 또는 단위 테스트 코드를 추가한 경우
+관계형 데이터베이스와의 상호작용을 위해 JPA 객체 관계 매핑(ORM) 을 사용
+
+
+1:N 연관관계 매핑
+
+간편한 CRUD 작업을 자동으로 처리하기 위해 Spring Data JPA 사용
+
+
+SpringSecurity 와 JWT를 활용하여 로그인 했을경우 JWT Token 반환
+
+
+Post를 수정하거나 삭제할때 해당유저가 해당 Post 를 작성했는지 확인, 아니라면 오류
+
+
+DTO를 사용하여 각 클라이언트에 맞는 데이터를 제공할수 있게끔하고, domain 을 바꿀수있도록 설계
+
+
+BaseException 을 활용하여 일관성 있는 예외 처리, 코드 중복 최소화 및 유지보수성 향상
+
+
 
 
 ---
 
 # API 명세(request/response 포함)
-음 노션 캡쳐를 올릴까??
+
+https://woozy-cuticle-bfb.notion.site/API-880f51845bde4e1caa907fc40ee24a71?pvs=4
