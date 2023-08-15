@@ -47,8 +47,8 @@ public class PostController {
         }
     }
 
-    @GetMapping("/getOne")
-    public BaseResponse<PostResponse> getOnePost(@RequestParam Long id) {
+    @GetMapping("/getOne/{id}")
+    public BaseResponse<PostResponse> getOnePost(@PathVariable Long id) {
         try {
             PostResponse postResponse = postService.getOnePost(id);
             return new BaseResponse<PostResponse>(BaseResponseStatus.SUCCESS, postResponse);
@@ -72,10 +72,11 @@ public class PostController {
 
     }
 
-    @DeleteMapping("/deletePost")
-    public BaseResponse<String> deletePost(@RequestParam Long id) {
+    @DeleteMapping("/deletePost/{id}")
+    public BaseResponse<String> deletePost(@PathVariable("id") Long id) {
 
         try {
+
             postService.deletePost(id);
             String result = "게시글 삭제 완료.";
             return new BaseResponse<String>(BaseResponseStatus.SUCCESS, result);
