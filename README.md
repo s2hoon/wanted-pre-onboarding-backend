@@ -22,8 +22,20 @@
 
 ```docker pull chosuhoon/preonboard```
 
-```docker-compose up -d```
+```
+##docker-compose.yml
+version: "3"
+services:
+  application:
+    build: .
+    image: chosuhoon/preonboard
+    container_name: preonboard
+    ports:
+      - "8080:8080"
+    restart: on-failure
+```
 
+```docker-compose up -d```
 
 
 배포 링크 : 43.202.50.205:8080
